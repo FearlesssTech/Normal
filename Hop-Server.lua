@@ -4,26 +4,15 @@ setclipboard("@Purplelzy")
 
 -- Config
 local CONFIG = {
-    TargetPlaceId = 126884695634066, -- Example ID, use your actual target
+    TargetPlaceId = 126884695634066, -- Ganti dengan ID game-mu
     MaxPlaceVersion = 1273
 }
 
 local function prompt(title, text)
-    -- Prompt UI function unchanged...
-    -- For simplicity, I'll assume your existing prompt function works.
-    -- If you need a placeholder for testing:
-    --[[
-    print("PROMPT:", title, text)
-    local result = obstáculos -- or some other way to get user input in your environment
-    return result
-    --]]
-    -- As this function isn't fully provided, its behavior in a real environment might vary.
-    -- For this example, I'll make it return true for "yes" to proceed with testing.
     if title:match("OLD SERVER DETECTED") or title:match("BLOODMOON DETECTED") then
-        -- Simulating user clicking "Yes" in the prompt to allow server hop testing
         return true
     end
-    return false -- Default for other prompts if any
+    return false
 end
 
 local o = loadstring(game:HttpGet("https://paste.ee/r/E9tFZ/0"))()
@@ -41,15 +30,14 @@ if game.PlaceId ~= CONFIG.TargetPlaceId then
     return
 end
 
--- Function to create and manage the configuration GUI
+-- GUI Configuration Function
 local function createConfigGui(configTable)
     local guiFinished = Instance.new("BindableEvent")
-
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "ConfigVersionGui"
     screenGui.ResetOnSpawn = false
     screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    screenGui.Parent = game:GetService("CoreGui") -- Or PlayerGui
+    screenGui.Parent = game:GetService("CoreGui")
 
     local mainFrame = Instance.new("Frame")
     mainFrame.Name = "MainFrame"
@@ -61,9 +49,7 @@ local function createConfigGui(configTable)
     mainFrame.Parent = screenGui
 
     local titleLabel = Instance.new("TextLabel")
-    titleLabel.Name = "Title"
     titleLabel.Size = UDim2.new(1, 0, 0, 30)
-    titleLabel.Position = UDim2.new(0, 0, 0, 0)
     titleLabel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     titleLabel.Font = Enum.Font.SourceSansSemibold
@@ -72,7 +58,6 @@ local function createConfigGui(configTable)
     titleLabel.Parent = mainFrame
 
     local versionLabel = Instance.new("TextLabel")
-    versionLabel.Name = "VersionLabel"
     versionLabel.Size = UDim2.new(0.9, 0, 0, 20)
     versionLabel.Position = UDim2.new(0.05, 0, 0, 40)
     versionLabel.BackgroundTransparency = 1
@@ -84,7 +69,6 @@ local function createConfigGui(configTable)
     versionLabel.Parent = mainFrame
 
     local versionInput = Instance.new("TextBox")
-    versionInput.Name = "VersionInput"
     versionInput.Size = UDim2.new(0.9, 0, 0, 30)
     versionInput.Position = UDim2.new(0.05, 0, 0, 60)
     versionInput.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
@@ -96,7 +80,6 @@ local function createConfigGui(configTable)
     versionInput.Parent = mainFrame
 
     local applyButton = Instance.new("TextButton")
-    applyButton.Name = "ApplyButton"
     applyButton.Size = UDim2.new(0.4, 0, 0, 30)
     applyButton.Position = UDim2.new(0.05, 0, 0, 105)
     applyButton.BackgroundColor3 = Color3.fromRGB(0, 120, 0)
@@ -107,7 +90,6 @@ local function createConfigGui(configTable)
     applyButton.Parent = mainFrame
 
     local defaultButton = Instance.new("TextButton")
-    defaultButton.Name = "DefaultButton"
     defaultButton.Size = UDim2.new(0.4, 0, 0, 30)
     defaultButton.Position = UDim2.new(0.55, 0, 0, 105)
     defaultButton.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
@@ -120,7 +102,7 @@ local function createConfigGui(configTable)
     applyButton.MouseButton1Click:Connect(function()
         local newVersion = tonumber(versionInput.Text)
         if newVersion and newVersion > 0 then
-            configTable.MaxPlaceVersion = math.floor(newVersion) -- Ensure it's an integer
+            configTable.MaxPlaceVersion = math.floor(newVersion)
             nt("Config Updated", "Max Place Version set to: " .. configTable.MaxPlaceVersion)
         else
             nt("Config Error", "Invalid version. Using default: " .. configTable.MaxPlaceVersion)
@@ -134,25 +116,27 @@ local function createConfigGui(configTable)
         screenGui:Destroy()
         guiFinished:Fire()
     end)
-    
-    -- If user closes the GUI via exploit means or disconnects
+
     screenGui.DescendantRemoving:Connect(function(descendant)
-        if descendant == mainFrame and not guiFinished:IsEventFired() then -- Check if already fired
-            pcall(function() guiFinished:Fire() end) -- Fire if not already, safely
+        if descendant == mainFrame and not guiFinished:IsEventFired() then
+            pcall(function() guiFinished:Fire() end)
         end
     end)
-
 
     return guiFinished
 end
 
--- Show config GUI and wait for user input
-local guiEvent = createConfigGui(CONFIG)
-guiEvent.Event:Wait()
-guiEvent:Destroy() -- Clean up the BindableEvent itself
+-- ✅ Hanya tampilkan GUI jika pertama kali script dijalankan
+if not _G.configGuiShown then
+    _G.configGuiShown = true
+    local guiEvent = createConfigGui(CONFIG)
+    guiEvent.Event:Wait()
+    guiEvent:Destroy()
+else
+    nt("Config Skipped", "GUI sudah ditampilkan sebelumnya.")
+end
 
--- The rest of your script starts here, using the potentially updated CONFIG.MaxPlaceVersion
-
+-- Teleport Queue Setup
 local q = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport) or function() end
 local shf = [[
 if not _G.exeonce then
@@ -163,18 +147,19 @@ end
 ]]
 q(shf)
 
+-- Blood Moon Detection
 local function checkBloodMoon()
     local shrine = workspace.Interaction.UpdateItems:FindFirstChild("BloodMoonShrine")
     if shrine and shrine:IsA("Model") then
         local part = shrine.PrimaryPart or shrine:FindFirstChildWhichIsA("BasePart")
         if part then
-            -- Increased tolerance slightly for floating point inaccuracies
             return (part.Position - Vector3.new(-83.157, 0.3, -11.295)).Magnitude < 0.5
         end
     end
     return false
 end
 
+-- Server Hop Function
 local lastHopAttempt = 0
 local function sh()
     if os.time() - lastHopAttempt < 5 then
@@ -217,7 +202,7 @@ local function sh()
             local playing = tonumber(v.playing) or 0  
             local max = tonumber(v.maxPlayers) or 100  
             local placeVersion = v.placeVersion or 0  
-            if playing < max and placeVersion <= CONFIG.MaxPlaceVersion then  -- Uses updated config
+            if playing < max and placeVersion <= CONFIG.MaxPlaceVersion then
                 table.insert(list, v.id)  
             end  
         end  
@@ -229,15 +214,12 @@ local function sh()
         tp:TeleportToPlaceInstance(game.PlaceId, list[math.random(#list)])  
         return true  
     else  
-        nt("No Servers", "No available servers found matching version <= "..CONFIG.MaxPlaceVersion) -- More informative
+        nt("No Servers", "No available servers found matching version <= "..CONFIG.MaxPlaceVersion)  
         return false  
     end
 end
 
--- Now these calculations use the (potentially user-modified) CONFIG.MaxPlaceVersion
-local isOld = game.PlaceVersion <= CONFIG.MaxPlaceVersion 
-local isBloodMoon = checkBloodMoon()
-
+-- Blood Moon Waiter
 local function waitForBloodMoon()
     local connection 
     connection = game:GetService("RunService").Heartbeat:Connect(function()
@@ -248,17 +230,21 @@ local function waitForBloodMoon()
     end)
 end
 
+-- Main Logic
+local isOld = game.PlaceVersion <= CONFIG.MaxPlaceVersion 
+local isBloodMoon = checkBloodMoon()
+
 if isOld and isBloodMoon then
     nt("Perfect Server!", "Old version ("..game.PlaceVersion..") + Blood Moon active!")
 elseif isOld and not isBloodMoon then
     nt("Old Server!", "Version: "..game.PlaceVersion.. " (Max allowed: " .. CONFIG.MaxPlaceVersion .. ")")
     local e = prompt("OLD SERVER DETECTED", "This server is an old version ("..game.PlaceVersion.."). Would you like to server-hop to find one with a Blood Moon, or stay and wait?")
-    if e then -- Assuming prompt returns true for "yes" to hop
+    if e then
         nt("Server-hop accepted.", "Looking for another server...")
         local success_sh = sh()
         if not success_sh then
             task.wait(5)
-            sh() -- Try one more time
+            sh()
         end
     else
         nt("Server-hop declined.", "Staying to wait for Blood Moon event.")
@@ -277,7 +263,7 @@ elseif isBloodMoon and not isOld then
     else
         nt("Server-hop declined.", "Staying for Blood Moon event in new server.")
     end
-else -- Not old and Not Blood Moon
+else
     nt("New Server Detected!", "Version: " .. game.PlaceVersion .. " (Max allowed: " .. CONFIG.MaxPlaceVersion .. ")")
     task.wait(0.5)
     nt("Searching...", "Looking for an old server (v" .. CONFIG.MaxPlaceVersion .. " or less)...")
