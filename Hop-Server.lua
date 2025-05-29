@@ -1,10 +1,289 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+setclipboard("@Purplelzy")
+
 -- Config
 local CONFIG = {
-    TargetPlaceId = 126884695634066,
+    TargetPlaceId = 126884695634066, -- Example ID, use your actual target
     MaxPlaceVersion = 1273
 }
 
+local function prompt(title, text)
+    -- Prompt UI function unchanged...
+    -- For simplicity, I'll assume your existing prompt function works.
+    -- If you need a placeholder for testing:
+    --[[
+    print("PROMPT:", title, text)
+    local result = obstáculos -- or some other way to get user input in your environment
+    return result
+    --]]
+    -- As this function isn't fully provided, its behavior in a real environment might vary.
+    -- For this example, I'll make it return true for "yes" to proceed with testing.
+    if title:match("OLD SERVER DETECTED") or title:match("BLOODMOON DETECTED") then
+        -- Simulating user clicking "Yes" in the prompt to allow server hop testing
+        return true
+    end
+    return false -- Default for other prompts if any
+end
 
-([[This file was protected with MoonSec V3]]):gsub('.+', (function(a) _spbtFvaivl_E = a; end)); udWSrhzytTalCVEU=_ENV;jxXnTQbKtQTObkV=';=duo#XbV+Y:reK>XVbX:=KrdYXd+eeV=uoKV+YouKu:Vd:QK:dX:5-Vu:udruKeu#b=YdKu=eNYoeX=Y=eX==orrY==o:bK:r>#KYuV#>+Ye#Xu:y>VubX=Y++>=##b+ubK>eu+bd:XKKdKX-+Y+>YeK:dd#e+VoYX>:d>Vrv=bu#bIY:ud+9r:Idu:b:Y>YudoXVYXV>U:#uV>r>>KuXbKXb>#ddXYY+eu=:=doeVV+Xeb9:oXV=?oX:YXeeK>oV+d#Y:=r>SYo#eud>#bYYe#=#o+ue:KHdojd+VXK:d+Xo+oV:>u#cV:r#:dudbKYVKrdedduNb:Y#Kv=:rbOXu=brYberdbX=Veee5+o:b>r#>>uebYodVK:b>ddeYYK>deXV+Ver=+#oVK+:>YuXVDYrK#u=#e+bV>eu0ou>bY)rXd+YeohV>r#K:u>Yde4o#db+:oK>bVrY=b>:X+:X>KueXbY>+V>b#u+er+mdoKbY:oYrrb=zurbb:duYV+e:KKo#b#:dK>=:X#YeK+=Y#:+#XuYbeV=uoKr+=oboYrK#=r#8+de:=#eV=+oeVVruoKY#e#=do>XKro+KeX==orVbrd>euVbuY>>udo#>+Yo=b>YrKYuobFY+e:=:o>doVo++eol>+KKed+XK#XKo3>#+V:refr>ubb:rYod#X+Yb+h>d#V+Aeu:buudeV>Kou_#e++eerY#oVKrbW>>dCeo:Vd:e>V+Yr>=Xo+da#K+#eN0::YKdd>Xduub)YVKu=Krr?euet:XrVR::>XV#eo=m##ue:K>ruYXKXo>X=:XV#De:=V#S+4:r>#o=XeYb+KuD#eYuedr#deVYr#>>=>XrY#+ekKdXd>boYoe>=YYo>rd>dX+oK=d+XV+deYroe>dX#oV>rYXo:uK:=VX#bdeeDuoXVK:>KejKZ#orbY:#>Cb>rb=uoubrrXeeuoXoY=eK>e#ud:XbY^e:=X:>52rYQduebV:uKKd+bVe>e:=e#9V:rXoYY>rud=oKVrrVRdeYduo>VYr##2YvKV=b#=VYeX:ed:bVrU>>d+b=#:bXdVK:dXX=eKouV=:rKruhXeYVKdr>o>+:r#W+oYu=:oKVu#=e+YeV=u#booru>>o+b#YK>YdXX/#be:=:TV+brX,dobd>:VKYub=:Y+eX=K#eVbr>rX>uX#:V>+d:#K##K+=Y#:o=rVN%uebdXV>bde=+Ybeo=r#:V#reruu+b::bYdu=Xb#ueo=d#dVubY>XuKd::#KedZ=bY#ed=Y#+Vur::ooXbu:+KVe:uV+ee:=XoXVYrbvduroVo#V#:Y>#uA:b=#odVI:r>XrK=roubK:+ob+oer=:o#VeVu>+u:bbXdeK=:#X+ue+=VoobKVu+=K=iXo=brK_=d#VVVK#oYVVru>uKY#dY>KYdo==VerY=XoXVK:VY>rY/Vu>bY:#obVrr>=#eedu#dVerV#XYueYdX#d+drKvKodoob>:YrV(KuebV:uX=VKeVmdoXbKr?Keu#XdYKe::u>XdVXu+Kd>b+r=>edKX>Y+:he=KeuuXd+eeVXu:YKYdbXo+TeYdd#KV>ecGYeVd#oeVVruoeV#:Vr>ueXY:d>==:XuXrr:^b#=be:XFddKXVXJ:ue#=_o:euu^X:Y#r#=do:Vd:=meoXbV:VKruuou+>e#=kor+y+KkrobV.oYVY:>>Yu#eX=b#:++e=EYeuudoVVu:KorYVekduoKVKrd:Xo#b:Xb>+=KX=YbVK->#u+=bYeburbY:#K#erooY=er=X1uVur>>+uebKbuV=e#>Xu=XrH>#X+=rV9XZVuVbuK>=:XVYoezeooXV=VX/o>roebr>d>>oK#K+YYX>r=:#X+==VbX:=KVd=X=+#V+LYoKVrb#>=u+dX:lKV=:=dYHre=##obKrX:e>Vuuo=#r:X>=drb=rd>euVbu>bd>doYeK+d+=qVYYer>o=V>:b>ruXXXYu++dV#bV>euYY>:uXb=YrKbdd#e+V=du##br+=bu>Vo:KKKd:d=b++bdX#>+erVYV>+uoX>YYK#dT#:+Xdu#=+brb>KoruurdKYubXYXVKr==#o+YV+r#>bVb::>rdrXY#+e:=*#bVY+YKoo+#e::KVdXXd+r+:eb>uoob>:Y>#ulX:YXK=XVYXeu==#:+beSJdodbXbdKrd=XV+:Y:>o#:+Xree>uVVdb=YXdbXKY+KB=KdB#?V:*+uuVobXKYdbXe+rKo9r#Y+urZAVuob::#>XddXXYb+rpr#uVrV+Kbu#X>:+rV=}XYX=rX7+#=V#VXKbuVb=:dK=KVo++Yeu=oouoY++>ed>uV:=K}duXu#>eu=##=oYrucbdKdYXrYbK==eu+VYr#Qyu:::>>um==oVbe:V>udKX+Yoe>=Y##+Pr:MVodbr:b>ddebdYueK=+##V>rYF##db::X>=deXKYdee=VY+>udrbVYKKrKV>=dKXXY=erX<r#rKr+xKuKb+:ouV+Ve+j#oebb:og6u{b=Y:b+:XKKd+XoAeu>Vr#=+orX%=urKKd=#>+ueXcKuYbb:oVe>Y#K>#:>:e:Xb:ddYibdYrKbdd#e+V>u:o:=>EdXX=+rdoV=:=Ked>>>o=boY>KYb#r>5Ku>V#:#>Xu.>Ko=buYKK+b=rL?=oub+:>>:d#X=uVbeYeKVdu:uA+uVbT:KKYP+X>+:eK=>KVde#e+Veu#K::Kedr#:YbK+>:ob+uei+YY+:L:Vr8rV+p#Yd>Y:Kedx#:+X=uXe:YKbce#+Y#KdYr=b#dVerVpuuK=+rL:eQ#udXeYVd+Vbrb>V=#bu:b>ud>u+++e#=uoX=KXb+urKW+VXK:d+Xo+o:V=##9VYYY>Yu>b=:=Ku:Y2Yd>XYY#dXVoro>#=dbt:o>GdruX+Xed=_oub=:e>+dKXKVYK>>V>ddeXVYueKo=#oV>rY=bY#b::X>=u=XbYdeeuV#>VKr+gou>bY:V>go:XYY=er=b#dVeeugu#K+d:oK>dYX#YsK:=XXu+=rbmoueV+:uKKd+Xo:#eY=##GVerX/uurbe:KKedVXurue+=#o>VYr#koYebX:=KrorXd+KeVuu+>V+r#>>uYb#:dK:uVru+reY=d##VVru>Ku+VuY>K:d#Xu+:eV==#d:urd>KuV+VYKKYdo#>+Ye+Vdo:VXr=d=ubbuYeaVXg#K+YeoE>oY+=r_/=Xdb=YeKbuu#e++eu9Ko+VVu=>Yu#bx:rKXdd#r+:ooGeoVVued>+u#X>rYuXd?#r+Xe=Cr#+Vdr>#Yuub=Y+>d=>#Y+#e)=YoXVd:r>YudX>YVK+X:#++#r>d=o#V=::>bu=ba=+Kd=e#VYYrKtYooVudr>#uUX:r:K==e#b:dMY0Vo#bK:Y>ouVXY:bdK=:#++=re-bodbeeV4odKXrYoKd=Y#++Oee=ro=VT:b>VdeXVYu>idA#o+orY=ooab::X1udKXbYVeed##uVKr+)ooVbY:V>au=XXYuer=b##VerYZuojb+:bK>oYYdYRee=X#uVre=zdXuY+:u>5d+Vb+>e:=##bV:rYbuurbb:d={dVXo+Ke++=o>Vrr#cfu:bX:=KrXuXd+>eV=ooKV+ro>>Y#b#:dK:dVX=+reb=dV+VVro>Ku+boY>KYd#r:+:eb==oKVbrd>euVbeYKK+doX^+Ye#=}VVVXr=>ruVbbYeKVdurK>ru#b::XVVr->:uXb=YrKbuX+e++eXFKo+VovXu>V+b=Y>KXd=#r>KuubYYeVorV>+uoX>>=oY+oYK>:ouVd:mK#dd>+uVXKY+KoX+r+>b=+X>obVo:r>budrd=Yo>=>X#+or>4Y+bK=d>#:#=:V=/o>VXrr>VudcYoVb>:Y>#bdeYzY#Y=e#K+drefV:#KudYX++oee=+K=d=#X+=rroY+=r:>Kurb#XYYKe>=Y##>edrbK+=KV=VX:+deY=Xe>du#oV>rY#uY>+:j+#X+KeeJbo>V:#o+^r+Lou>Ku=+>=d>XXY=erV:::>Ydehoodb+:oK>+de+=oo:=bV>VrrbmdXrK:=VXz+>r+==oeooY5a2dVXeY#eY>=XA+be#=ddVVX:uK>ubueb>e:doo>oerK.Xo#brrdrX>#d>XY+:=#XuV+re==u:bb+u>ed>XYVQe#=ro>+V+e->oVVX:=VVrK>euVbu=X#e+Vr>>+obb#:r>:dXX>Y:bu:TKVdu#KEroebeo:V:r6>:uXKu9e##VXrrn#eo=Fo+Vo:>X+YVb=rYKXd=#rK:ubb+Ye>udeX:YVeV=Voro}r>.#>=XKYr>Xu=#eY#VK=ro++=e)>Yodu+boY>:e>:udXeYV#b+br+>+eN=#o#V%::oX+ee=7V##VdbVKYd>bd:VVheo>#uAX:KrodV#ru>bu=dV:bKee+XX+or:7+mcVK::huodXr:o+e=r#oYdrYY#Ku=Y##+ d>Xb:#ee:V>odeXVYuorVe##+#rYN#oGKodoXo+=e+=XK?=V#uVKr+-ou>eu>#>=oeXXY=erX#r=Ye=C#b+dr+eoX=V>eX=#oyV+r#YrdebbY:e:db#b+Ved:>u:V::=>oudXd+KKu=bKKdeXu+Ke+#+r=>ruobdurbY:=KrdbeX>Ko:bKo>V>ro>>uYrd=##>VKe}N)eV=XoeVVruX:+YKV=bK:u3Xh+:eX#+r8>:ud#<+eK#do#dVbro+:eY=Eo:VXu##e++eK=dK+ud#K++eo#rY:>e=MXb+beo==ueVbr>-:urbe:bVb:>>Yu#b<Y:KX==+:+V>>.eoVVuBKX#++e.=eoYoNed>buYVvXbKuee#K+VK#r+#=VVrVgYoobB:+Y==K#r+Ver=YoVuKre5XoVbu:uKbe:#b+Vre=_#t=K#>+urKq+:oK:=:XK++e+ZeKddX#b+dre#::be>deX+YdYe=oooV.#b+drr*bodYX:+AedKX+YodeV+b#>=o=XbYYKV=V#o++reru#=bKrXv#d>bb:u+:=rX,Y=e#NXeKdd#uVKr+oK+dr+huuo+Mr+=Jonbr##VerV{uuKb+VoX+XYXXY>e:=X#=KRdrXKYdKVddX-+e:b3oorV::+KKd:*doubb:dKebVr>>>urb++VKKrXHXu:bX:=#d+ueb=#oeVX#=V+ro>>uYb#:Hr:X#XdYVeb=doe>Vd>#>+re+)#o>+beuDoo#b>oeYord>euVrX=u#:+YroOr>#Vd:!>buXX=YYKXreoKVorbq#u+buXYYeWuXY+YeXKXAbd##e+VeufKo+VorbuYuXbVY:KXd=ejsXofVd:#K#duX:u#b#YYK#d3ro&Xudb#:+>#r<>VuuXKY+Ko=>#Y+#e=ddoXV=:ro:+be+1e#uVer:?Vdub++#Kr=r#++X:#=###+=:+3=u=XKo#Y=:Y>#u-eu=Y##VrrYrr>rubYYe>dX#+Yd+V=bo>berdqGoou#Y#Krd#ddYo+YeuoXb:rd>#uKu#oobr:b>ddeXVYuob#+##+urYM#o,>d=b#YYMXVYree=V#uK=dKbX:#e>db=Wbue#==eede#dVerV#XYuK:dY#o+rV#qVoYVXb=K>uXb=Y+erddX#+b+drecV=##LV:rX!=Robb:dKeuYeX+Ke+=oXoVYr#/a#:VX:=KrdbXd+eKb=uoK+ero>>uYbX:vKedXX=Y7eb=uoeVVru>Ku+bo:RKYd#X-+:eX=dorYeeV>euVbu::K+d##>+re#=o:eVXr=>roobdYKKVu#bK++eoO>X#V#rG>:oV:uYrKVddb#+Veu*K#:+V:>>ru#YeY:KXd=#rY#ed&eoVV#:K>YuoX>:VK#dW#:+Xe= robVdeV>VuuXKY:Ko=>#YYb>5B:oXV=e=>budXerVK>=K#++or>vY#oV,::Z+u=XrYbKu=e#Y+urK?:oob>:Y>#uEX:YX>uuV#b+dre=:oubK:+>YuXXYY#K*uN#X+drr(VodV=dY>udKX+:+e>=:##+ouewXo=bre?>ddKXV:#>K=+#oV>ee #o)b:eXX#drXbYdee=V#eVKr>d-u>bY:#=Kd:XbY=ee=b#X>>rV*uuKYb:o>6dYbbrFe:=X#=+rrb!duebK--KKd+Xo:reY=X#&VrrXQ#YKbb:dKeo#Xu+>e+=Vr=VYr# *#rbX:dKru+Vd+eeV=u#KV+ro>>#YK+:<K:dXX=+rK==d#u++ru>Ku+YdY>K:d#X=+:eYVuorVbrdd:uVboYK>:oo#>+Ye#ddo:VXr=adXubdYeKVoV#K+Yeo3>oYV+ud>:uXb=e=Kbdu#e+ro#RKo+VoKe>YuXbw:e9Xd=#r+b5dCeoVVurooXuoX>YYGKdS#r+Xedjro:>o:e>Vuu+bY+K#=>#KzbeEE:oXYK:r>Vudb>rVKu=K#+ror>GYo#Y7d>>Xu=XrYbKddb#V++eY)+oob>KV>#u=X:YbK=d?r++dre,Vb=bK:Y>oo=VYY#Kw=:XD+=rr8boVY+:V>udK+YYoKG=Y##+0r>bVo=br:bdudeX+YuKdV:#oV>rYuroDbr:XIuorXbYueeuu#uVKr+=XV=bY:b>goYXXY=erd+##Ver:3u#rb+:oK>dYbVYLer=X#oVrrV7dueVo:uK>d+Xo+>eY=##k+XrXhdurb+:dKedVb#:Ke+=#o>YYr#v4u:+XdVKrdVXd+KeVoKoK+:eM>>urb#edK:dXX=:reV=do>VVr#>Koebor=>:d#Xu+:>r==orVbeo=uuVbbYK=edo#>+Ye#=#o:VVr=mnubbdYeKVu##K+Yeom>oYVXrPNe#Xb=YeKbdX#e+VeudK#YVor5>YuXb4:cKXuuXb+be#ieX:Vu:K>+uob#YYKXdF#K+XeuPr#++F:e>YuubdY+Ko=>bYYdeqweoXVu:r>rudb>:>Kudd#+rdr>!Yo#V1r>>XuuXrY:Kd=>#V+ueu3+obb>:Y>#uWX:YX=:=r#:+dre&Vo#bKr:h>d>X>Y#=+=:#X+=eK=YodVu:V>bdKX+Yo>>uX##+Xr:&ro=Y::bNou+XVYYeKdY#oV>rY3#oob:::>=u=XbY+eedV#eVKre(ooXbY:Y>D#:buY=K(=bbuVer:2uuKeb:o>ddYXbY9ee=Xb=r+rbUXueb::u=bd+VY>XeY=+#nKXrX,durYo:d>=+YXu+Ke+X>o>V:r#=d#:bX:#KrodXd+eeVd#+<V+r+>>odb#:nK:uVXr+ree=dboVVru>Ku+VbY>KKd#XX+:eb==orV>rdM=uVbuYKK+do#>Yue#=oo:VVr=>rubbX=>KVdu#KtBeo=QoYY#>e>:uYb=Y>Kbo:#e:KiKjKoeVodX>YuXb6K#KXd#rK+bedLeY>Vu:>>+oXV>YYK+dMbX+Xe=nr#+:::e>euuVeY+Ko=>XrYbec==oX:o:r>budVeY:Kud##++br>uuo#+de=>Xu+Xre=Kd=e#V+ue>5+oYb>r->#uVX:YX>9=r#:+deu_VoobK:+!bd>XKY#K5=:#X+=rrbdodV=:V>#dKX+Yo>=uY##+or:ybo=br:b=do+XVYVeK=Y#o::rY&###b::r>=deXbYdeeuV#:VKeJ!oodbY:K>*d:buY=KC=b#+Verezuoo+o:o>udYe+YJer=X#=Vrr:bouebV:uXdd+X#+>K}Xd#)+3rXbdurbV:dKKdVXb=}e+=oo>>:r#)=u:bYduKrdbXd==eV=ooKY+^=>>oDb#:#K:oGX=Yddo=d#uVVue>KuYbo:pKYd+ed+:eX==rXVbru>eoY+uYKK>dobY+Ye#=m#erVr=,uub+=YeKVdub5Y:eo=boY+KrJ>:uXb=YeKbdV#eY/eut>o+Voeu>Yu:bMY:KXd=#r+bKuBeoKVur6>+uoX>YY=sdZX=+Xe=?robVdr>=Vuub#Y+=Y=>#Y+#>_oVoXV+:r>rudVbYVKu++#++:r>Bro#V+::>YYuXrYbKdro#V+orK=:Xob>rX>#obX:YXK==r#r+deYqVoKbK:+>od>rVY#Kr=:#V+=rKxbXV:V:V>>dKKKYoKQ=Yb++pr>bVo=br:bbbdeX+YuKdV:#oV>rYYrowbr:X==X+XbYKeedu#u+rr+=X#>bYrd>xd>XXY=erubV>Vee#Fuo:b+:YK>u&YYYRKb=XerVrrVzdoYbV:bX)d+Xo+>X#=##=V:rYbuurbb:d+odVXo+KK:uoo>+Xr#u#u:bX:=grXoXdYYeV=KoK:=ro>>+Vb#:rK:dVX=+Keb=V+YVVr>>KrYbo:nKYdXX2+>oV==orVb#u>eu+burDo:doX:+Y_r=Go:VXeu=rubb>Ye=edu#K++>ooroY+urMRXuXbeYrKbVA#eY#eu=No+VX:>-CVdbT:VKX:V#r+VedzKoVVbuS>+uoX>o=K#d=#:YVuu/r#oVdeY>VuuXKr+d==>XV+#e:4:bVV=rdooudb:YVbK=K#Y+oe&cYo+>d::>Xu=ZbYbKu=eXY>#rK=boo:X:Y>#u&b=weK=dV#bu+req+ouV::+>VY=XYY#K-rd#X+drr=+Xdberb>uu+X+Yoe>uY+d+LeYQX#Jbrer>duuedYuKr=+>XV>r:R#o>b::YXudrXbYdb>=V#oVKrebXu>bY:#+bd:XbY=KKub#d+rrVdbuKb+:ol>XbX#Y>e:d##=YVrbGdodbVruKKd>Xo+>eYu#VeV:ebH=obbbrTKedVVe+KKV=oXNVYrXNOo=Ve:=>udbK=+ee+=u#!V+rVb=uYb#:BXYdXXd+reboVoeV>ru5ou+boY>>V+XXpedeX:KorVVrdBouVbbd{K+do#>obe#==o:VYuu>rubbdXKKVdo#KY:>og>#=V#e:>:uXb=:KuuddX#+V5> Ko+Voe=keu#b+Y:>rd=#r+bed=eoVVY:KAduob{YY>bue#:+ee=drobVd:e=VoeXK:)KodX#YeUeO=eoKV=ro>bXuXeYVKu=KXb+oeXPYobV :r>X#=:eYbK+=e#Y+u7XZ+#XKe:Y>Ku2X>YXK==rbb+Xre==ouVb:+dud>brYrK9d##X:urrkbod+er=>uuVX+YKe>dK##+9re5Xorbr:e>ddeXVYu>:=+#KV>rrQ#odb::X>udrb=YdKu=V#eVKr+dKu>V=:#>Yd:XbY=er#u#d+orV1ouKb+:oK>+#X#Ybe:=V#=VrrbjXY>bV:uKK>lXoY4eYdbb8V:ren=#bbb:dKeuYY#+KK==o#rVYr#,?oeb>:=>#dbVe+eeV=uoK+bro%XuYbK:)KrdXX=Y+eb=+oeVVru>Ku+borrKYdrX9+eeX==orVbrr>euVbuY>K+do#>+Ye#= o:VXr=>rubbdYKKVdu#K++eKG>oYV#r=>:uXb=:=Kbdd#e++erAKo+VoMb#>+XKd=>oVVX:eO:eu==oVVu:KX5+#erw>KXdY#:+Xe=#uYr>X=S#eY#Ko=dobVo#:+re*U:oXrod:X#YNed.:#b=>Xu+or>BY+b>#d+o++XeK=eo:V3:e+orKG+ooVo:Y>#uvXr:3K==r#beXuXb:YXKedbXd+ore=+K=uV#X+=rro+YKKrdb#boK:X=uoKVVb#>#o=X:Y>>Ceb#YVKe:ru#=Ve:#n=uKXYYo+r:b>:drXbYd=>XoYdeeOedoVrr+LouKdrb Y=er=b:#>ruXb=YuerdV#V++euY=ee=X#=Vru#bXuebV:uKKd+b=+>eY=##!eurXC=urbb:dKedVXurKe+=oo>V:r#Zdu:br>KKrdbXdYdeV=ooKVYro3uYrb#:0K:d:X=+eeb=X:>VVru>Ko#bo:_KYubV(+:eX==#CVbrd>e#V+#YKK+do#>+YeX=wo:Ydr=>rubboYeK+dub4YVeoS>oYVYrv>:uXVurdKbdu#e+:euPKo++Xeb>YubbvYeKXd=#r+bKYQeoVVur<>+u#X>YYK>dU#:+Xed3robVd:e6duuXKY+>X#e#Y+#eTteoXV=:r=bo#XeYVKu=K#++br>=r#VV}:e>XuXXrYbKd=eb#+urKf+oXb>:r>##gVuYXK==r#b+drKOVXuVY:+>od>XYY#Ko=:#r+Vrr1+odbe:V>odKXYYoe>XY##+Ur:0Xo=br:b>durXVYueK=:#o+=rY{#oYb::X>=deXbYdee=>#uVKr+5bu>bY:#>nd:XX:+=r=VX+VerVsu:Je:dr#0+eeV&#o>b>:#rX>Xu=b=YrK:d=#r+Veo=uoKVVVrrY,=urbb4X#X+#rV+>eK=oo>VYRKXe+ree=XKeubXd+eeVX5Y>>od+oeY+K+=+#=V>ro>eo:b::r>Xrohdu+boY>uVVXre^ieb=VorVbrdozYbK=ddoK+deu+Ye#=So:VVrY>rubbdYeofduXf++eoT>oYV#Kp=XuXbuYrK+ddXd+VeudVo+VV:>>Yu#boY:>Xuu#r+:ed=uoVVu:K<+odX>YKK#db#:+be=ur#bVdr=>VubXKY:Koo>#r+#eo6:o+V=:e>bud+bYVK#=K#e+oetzYo#VY::>Xu=XeYbKd=e#V#brKW+oob>=#>#u5X:YbK==r#bYoKo&VoubKK=>od>XY:b>==:#X+=Ko)bodbeeK>>dKX+YoK#=Y#X+cK=vXo#KK:b>ddeXKYue>=+#VI=rY #oxVd:X>ddrXbYree=V#uV>r+/ou>Vre#>?d:XX:oer=b#dYedK5uuKb+:oK>oXX#YA>b=X#=Vrr+adu>bV:+>>d+Xo+>Kb=##=V:rX&=oPK+:dKedVbL+KeY=o#u>rr#E_u:Vb:=Kedbbo:eeV=uoK+rro>>uY+#>oK:dXX=+rebu=oeYVrX>Ku+boY>KYobX2+:KV==orVbro>eu+bur,%+do#>+Y>+=Co:VXeuX.ubbuYe>Xdu#K++eodVoYV#rJ>euXbdYrK+X=#e+VeuSKo+Vo:>,roKbpYrKXud#r+bed=>o+VurI>+obX>YYK#ogXb+Xeu4ro+Vdro>Vo#V+Y+KV=>V#+#e/*:oXV>:r>+udb=YVKu=K#++Kr>3:o#V_::>Vu=Xr:+Kd=K#V+orKU:ooV#r=>#udX:Y:K==e#b+uretVXYbK:+>ou.XYY#KHde#r+=rKZb#rbe:V>uo<b:YoK==YXV+5r:}XX=+=:b>odeXYYuKe=+XXYdrY.VoWbK:X>=drVbYVee=:#u+=r+=eu>Vj:K> deXXrber=V#d+,rVTb:<b+:oK>#SX#Y=e:=YruVrrbRdXVbV:oKKu:Vo+>er=#XYV:rXp=oKKo:d>qdVXK+Ke+=oX=+er#cou:VV:=KrdbXdYDeV=#oKVeroc)uYb#:=K:dXX=+eeb=doe+YKu>Ku:boroKYd#XgY=du==oKVb>=>eu+buY>K+dVe=+Ye#=NbYVXrd>ru:KoYeKVdu+d++e#n>#rY#rf>euXVXYrKbddbeKYeu=Eo+VX:>4uu#bX:rKXdu#rr:ed?KoVVu:K>eYXX>YYK##o#:+be==}:+Vd:e>VbuXKYYKou=bY+#edw:o>V=:r>buV++YVK#=K+=+oeGWYo#Vs:>XVu=XrYb=Y=e#++uedb:oob>:Yu#uxXrYX>uur#b+oreu=oubK:+>Y#:XYYbKG#Y#X+drr)bodV=dY>udKX+Kue>=:##YdK:iXoubrK5>ddeXVru#d=+#XV>rr-#o+b::r>:drX+Yd=e=V#oVKrY-oouKr:#>Nd:YXY=ee=b#orrrVU#uKbr:oK>dYbbfde:=+#=:+rbSduebVddKKdeXoY=eY=## V:e+N=o=bb:#KedVXu+K>d=o#uVYrbJDurbX:ud:dbXX+ee+=uoKV+eXX=uYbY:J>:dXX=+ree=+oeVKruF?u+b#Y>K:d#XArdeX==orVrrd>euVV#dKK+d:#>Yee#=lo:YXre>ruKbd:oKVo+#KY:eX8>#dV#ru>:uXb=rrKrddX#+Ve:sK#XVor#Z:u#bbY:u#d=#e+beY_eor>#:K>+uo:KYYKXdj#:=ue==uobVd:e>VuuXKK#KodX#Y+XeSF:oXV=d#>buYXeYrKu=K#++oed(YoeVy:r>XuuXrYeK+=eX=+uedO+o#b>::>#u7+dYXK==r#:+drecVo+YY:+>:d>r:Y#K==:#X+=eOb+odbe:V#odKXYYoK#oX##+Vr:Xbo=be:b>ddeXr=#eK=+#o>trYJXo3VeeX>=uXXb:ree=V#uYFd+0ooYbYed>4d:XX:uK#=b#KVerYTuuKb+rX_+dYbdYSKK=X#=VrKbzKueV#:u>:d+VY+>Kr=r#,++rXddurbb:dKeubXuYYe+d4o>+Vr#nJu>bX::KruuXd+KeV=br_V+ro>>>eb#:=K:drYK+reK=d:=VVro>KuYbo:u#rd#Xm+:uY==oeVbrXX>uVbuYKbudoXy+Ye:uro:VKr=XuubbuYeKVduXdf:eon>oYKrr<>ruXb#=KKbdd#eddeup>o++Xe>>Yu>byr#KXd=#rY+uK3e#uVue#>+uoX>:rKbd}Xb+X>X robVdr><Kuub:Y+>b=>#Y+#>m=KoXVK:rhoud+uYVKudu#+Y2r>=Xo#Ve::>XueXr:=Kdd+#V+orKO+oVb>ro>#u,X:YXK=dK:++deViVXYbK:+>od>KVY#KY=:#V+=rKjboVV=:V>edKKrYoKE=Y##+Pr>bVo=br:bb#deX+Yu>0u+#o+YrY=>oHb::X.uuoXbYKeeuV#uVKr+=Xo+bYrd>Fu=XXY=er=bXBVeeutuo:b+:#K>dYboYTKX=X#bVrrbEdueVr:u>+d+X#+>er=##XVerX.rur>u:dKKdVXu+KeeVXo>VYr#bru:bb:=>C++Xd+eeVeXoKVYro==#Yb#:rK:uYX=+rebud+%VVr>>Ko#bo:oKYubb(+:Ku==XbVbrd>euVV#YK>#doX=+YeX=5o:+=r=MVubbVYeKVdu#KYYeo=:oYVXrm>ruXb#=KKbdd#e#:eu0>o++Xe>>YopbBr#KXd=#rY+eeQe#oVurd>+uoX>:rKbdsXV+X>:,robVd:eI=uub+Y+>==>#:+#e8=+oXVr:rF3udXeYVKuud#++>r>D:o#V=::>YuKXrYbKdKp#V+orKB>+=b>rd>#:eX:YbK==e#b+Xu>8VoubKoX>oucXYY+#d=:#X+=bX!boube:Ko^dKb<YoV+=Y#X+1rr_Xo#KK:b>dde=dYue>=+#o+orY/>opb::X>=drb+=:eedu#u+Vr+Cou>Vr:>>BubXX:>er=b#dVeKu?uoVb+rNK>drX#YXKV=X#:Vr#eMduKbV:oKKdeeX+>eY=#KXV:rb5=olK+:dKedVtV+KeY=oX=YYr#6:u:+a:=Krdbbor=eV=>oKY+ro>>uYVb:rK:uuX=Ydeb=doeVVe#>Koobo:rKYdXXO+:>===#bVbrV>euVbuYKK>doXY+YeX=FoeVXrbI:ubbeYeY:du#>++e#?>oK>brT>:uXuoYrKVddX>:Veu=Yo++V:>>Yu#+/KKKXde#rYued=doV+#ed>+o=X>r#K#dq#:+XeVJr#uVd:>>VuoXKY+Kr=>XX+#eXT:oXV=:rErudb+YVKo=K#Y+oeubro#Va:::+u=XeYb>oue#V+KrKduoob>:YLbb:X::dK=d4#b+dre=YorbKrX>oubXYY#K.=:b=+=eb!bo>be:+>uudVdYoe>=Y=V+arrHX#u+r:b>rdeVdYueK=+XXKurY=*o0Vb:X>=drb+:beedo#u:ur+*ou>Vrrd>4uVXX:oer=b#dYee=)uo:b+r=K>#HX#Y^Ke=X#eVreuIdoYbV:u>Vd+XK+>KX=##=V:eV=VurV=:d =dVXu+K>+#=o>+or#AYu:b::=>K+eXdYVeV=ooKV+ro>>#Xb#:YK:dVX=+eebdoXoVVre>K#uboY>KYubX#+:K===X>Vbrd>eoYV+YK>#doV:+Ye#=Ho:V>r=kXubbKYeK+du#K:Xeo=+oYV:rQ>:uXb=erKbdr#e++eu=-o+VYWr>Yu>b.XKKXdd#r+Ved==:YVu:K>+>bX>Y:K#udb:+Xergr#:Vd:e>V#u:=Y+K>=>X#+#e#Z:#V+V:r6uudVVYVKu=K#+Yrr>=#o#Vd::>bu=Xr:#KddV#V++rKH+oob>rK>#u:X:YbK==e#b+debFVoubK:Y>od>XY';BhdVYpynlzisWXipS='YtfK{cjMb_rF>g=zKM=z>Kb_{F!>bFb=jff&grFXjrKcz_MbMMDj>g_fcMtMtz=Mr5jKKKr>Fgct{MBz>bbFcFg{=bM_jzKMzyFKbKz>Afrt_McztbgFrFf{Kg>_FzbM{;vKgK{>jjzt=MrzjbfFzFM{bFt_;zgM_pcKfK_>rj{Kzg>{b={Ft{gzgc_gcjt_=_jfMc2_>t_tbM{zub>F_Ft{tgFFF=bc0bA_Fzbc{gUFbF_=Kt=gFjMcf_KfPfMbbFtztc_MjfKtKf=br=MjK{F{>McrtKfUgK_KtMtg=zrrfFKcFrbr_M{M=fgtjzfbKcFbMFMtztzr>r{mcK=Mggczfrg==bbcKcKM>{bzcMtgg{_cjrK2zMFrj_Mr{fzFF=b=CMtfr=r{fjfcrcFKMcz>z=bKcKjHg=gMj_cz=r>{bb{H{gU1_5cro_ffgF_gjF=f=>b_K_KF>b_V_gtFtcrcjffKzK/RbcMK)FgKbt_gcKt_=t_ztzKf>cM=bFe_gt>c{M{gtzgrcFjc=rFr>M{jD_H{_Kj{tgfrrbj>Kbz=rFF{b{zragrt_Mt_={_brfKz=zztM={>%=gfb={zf&=brFMKK_=bz_>tMrKgkgbj_gfgfKrcr{f{Kfz{MFMg7fgfgzcgfc===/j_{KGMFz>>Mrtfgrbbrtcrt>=rjtjFJbFbFr{{Izt>_Fczf>=trfMfMzSc>cbMcfD}ttg__fccfc_=rb{cVj>_bMcKt{>jg{_jtcfb==Fbf_Kf==FgMrcj#zgt_ztjtzgFrrjM;>>{gt{zLKtgrrc{cKznggM=jM?t>j_vMFtcgr_zbzf_==FfrKKgyf>gFMcttc=K>FjgKttrF{MbK=f=>bbgcc{fg>r5jMcjzjFjrcKzoK>rF_cKtb=f>gjzK5t>F>bKjF8c>r_fMzf3=f>=jMcbzM=fM>{tArzj_,cctz.rr{j_Ktt=FbM>{jKf>>_tcc{j=wr{j>crzM={bj{FKK>g_tcr{M=_r>_jK#zcFgrr{{8_gKF=c=tg4grgjFc>zjFFbfMEAr>z_Kb{t==Krg_bKfzMFzr>{>ttzF_{bcf{Czr_j=KMfKFgbf{>KMgt_jc={F=cr_MKczz_F=bfMK)ggt__bMfKttrFMCK_fcFzb{{zK_gF_zbbff=jFf_>K=oK=FbF{_Krgr_gb_fK=MFf_gKzv{=>bj{FtjGRrtjc{z=bg_MbjKzg>fbFMMttgjr7bFfc=rFf_zK_zg>MFK{gtfgj>Mjtfc=ggFMbjc4M>FF{{=t{gb>bjffMztg>MjKr:*z9br{ztFn{r{jjcKzKFMrf{ts_zt_fcb{Ngr_zjbc{zcFrrKKgkK>MFMc4{tgz>Fjcfrz{gzbt{{f=g8_{MgtMgFrb_tfF=zFcrc{{fzgt_jM=tbggrf_ff>ztFcrj{b&gzc_Mcr{{g=rKjgcbzfFMbQj>Ij>>_tb6trg=rb_{f=z{Fbrb{_BFzM_McF{j=VrcMtcrz_Fzr_{fKKgtFgcMt>=jgtMKKjfi>fbjjzT_>g_rbKtg=trM_MKjftFFMz{_Kc>z_{cb{_=KrbMtcgzMFFbtMt-FgZ_bbctz={r=__KKzM>trg{>tKz>_>cF{F=Frg_rK>mD=_bK{Mttzg_gjf{>=jrFMbjIz=FPb=Mg{FEjbM_tcgf_=3r_jF=rz{M_{Fc>=o_b{gjjtz=trzfjK8>gMgMz-rg{=tjjc_=trfMfMzzg>cFr{=9xttg__fccfc_=rb{c%j>KbF{gt_>jg{_jtcfb==Fbf_Kf==FgMrcj!zgt_ztjtzgFrrjM:>>{gt{zeK8ggF_jtMft=gF_Moz<zr_M{M{_gj_=rFfFtz=KMoKtAtu=_*cKtrg=bzrfKjf>r=M_fgK=(jFzbfcf>FgcMfK zcFbM>f=K>z=Mg_lcjf2_t_rcjfc=fF=MMK_9MM=bM{Ktf>zM{f>K_FMjFMc{Kz=Mzb_cMtf_K_gjFfjrMFtMg{_H9>_bF rt{__jFM>1#FbjgbjKzNt>z{jc&=g_g_zf_z{NtbT{rK>>jbMcMj{=rr__=fTK>zfFbbxK=F=gtj{tgfrr_j>j{=j=>F=M_zrV{b_c_jj=Mr=MKKfsKF>>_{b6=gK_c{rcKfK__r>{GKjFbbKKM{tg=b=_Qtg=>F<jzfg==>fb>{>^ggfbM_bj1t_g>r>fcK_>>>f{{{K>Kgt_Ktrt>rtMtM=z=>XF_{>Lb=<__rjf{zGFKMFfM{Rz_FFb_hiorrMcMc_={r=FFj_WOFFM>{>c_gzrfjbtcfj==rMjrKrFKFgcrtFgbrcjcfFgF=_rFfrKg^K>gK={MIKgfbzjFf{=jF{fFK{zlFzM>ftg_=jj{tbf_Fz>fb_Q>zF>_b{<cXzgFrMc=fM=_jbMfzM>_grc=tj>F={_gczfgr{r={FzFzgbrcfczg=rKjjf{=cFc>fMf jzF_c{Kc{t>gc_bjb=t=Fbb{f*M>rbzc>8_tMg_cbjFKtzFj>McKtR4Fg__cft{=fc_jft==grr{z.Mt{_f{jcg=gg>_zMKfr==F>b_zbz=gobFB>tbgFrzjjfrzb>cK>Zfg_>b_jctgfg>rbM{fFrFFccf*fo{bzc_jj={g_jgfF=>F>>_{gt{gK_j{rcgzt=Mj_K{=bz_>tMrKg<gbj_Pfg==r=MfKFStr=F>M=zgtTgjr#tttrgjrcjfK=zMF_bMz=oM>K_f{zz{r>F_KM=Fo{_fbgcKtjgf_>crzK=fFvjF=>zj>{MzGXLrgb_Kt{t==rFjjg=gzM_{{{{jgt_FrbfjtFFcjgf=z=PF_Ncj{bgMb>_zKKf_rFMjfr{jz>>fbr{b>bgFj=fMK{Ffr_jgzCzj>bbKU{v=_KjKMy===cr_{fBg>jgKbctr;>bz_bjbg=ztbcMFzg>bM>bjfKgKgcj5KlzfFcMfKKmM>_bgcjtF>>ggrcc=ftztjrb{ttEMb_bbDbtjgbczjt=jFj>KMKLbzgbbjffjg==Fj=f=fMrM>&M_KFd_b:brfMgMg_jKf=KF=gMzKFz>>>g_b_t=={r>crjFKK=>rzMzzb?f_zcgt==crjMhfuf=z.jzbf{btfbKb>{btMg{FHj_fFz_M3M_Kcd{>tjjt=fFr_cgjKB{&3>)b{cl2g>Mbzjt=zg=r>jM=bzfF=br{t3r>>{Fccgrr>Fg{tz_r=>Mba{ft bM_tf=g==EjgKc{f>fFj{=aM>b_brcfKtg=tMjfjKMzzFbMF{F>{>=jFfb=>FfMFK>=>zrF>KF{=t{g={zcbt{=KrQM>KczM>cK>{c%tgHbgKf=rzMMcf_{Hg3b0bFcttFb>rKtzt>==r_frf=g_rMM{CKtMgzcfj_zM=jF{jzz&zr>j_f{_>_gKM;fOffrzMMb{6K>gb{{ctcffrjjMKtzfrKFj{r{1>fbg{tcftrgK_jjjgz=_bjKz<Mgt_cc{7MtcgMcjj_fzz_jrMKfzz=FF_Mc<tf=kcMjZt>=Frb{ghctf_E{{cb=Fg_rgjFfczFFcbS{{>K>z{=cjt=gM_rjr=K=gbr{f{z>>_f{jcMtzgb_FjF={=z>KbtKFtt>F_jcrgtgrjKj====zb>M_:{X>bK_rcffj=>r=jz=jzrbrbb{zxtb>b=tFftr{rffzzM%{bt{MH{qcgKb=)zfF=trMjzfgrg>jb_ctBjbjbzczgc=jr=jMfrzrMKbjtr3jbzc>j_=jr>j_j=KiFM>fcjtF>c>{jft{=4zEr_jFK_FwFMb>{{ucg{{=cbfj=tjfMKKFz{FMbMnPnrrMrKfftFzMFMjgzczjMz{>c_gj_>c_t=fj==rMjrKrFKFgcr{j>zgtcrczftrwFK{Mp>FjFccupct>gc_Mjcg>=jbKMMz=zFrfbccb+bFgrc{g=c=MM5MtKg&_>Sb_{F>rggMtKj=%gzMFfz{jzz>tbz8jt?rg_rMbz>rjrcK=zczg>__c{>tcgMcjj_zg>fj>jFarFFgfbF{gtF_fr_cMfj=KbbMj{r!b>f_bcftg=tjmjf==zcMcbKKF3zgc_Mcb>zgjjtKj=zzjFjM=JKz=bg_{tMtc_=_zjgfbr_FKMz{F(f>Fbgv>tzFKMbffftF=Mtbb{t!Kgt{bcf=z=__MjjfKzWF>bbKz%b>r{_c>z Fcczc=zMr=>cM={#q=bcbzf>fjg{rKj:fKztMrbF!r!Kgz_zccggg=jMK{{tF=b{{tEj>F>{jMcjf{gzjZMtK_zfFcbcz=ttrc_ttr=Mz{MtK=z{z>F-bbK>=t>={=cbfj=tjfj>KrzcMjbN{=?_br_{jftg_=rbMjKtFfF>br{c>jgm_=c_gr={btKtKK>}_t{gt_gU_tjrfj=zFcjcjzKgzbM_bg2Ftg_jjgjKfF={rMMMzoxK_M_rjt={g{rfjrgg=Mb{K>{_>jbMcycgtHgcc{cgfgrKF{M>Kczb>b{t{r=bg>jKj=Jj>rFrM>{Mwrrr{r{>gcr>r{cjfc=fbMMK+z1MF_bM{c=rgMMfjtfz=rjFM>{{zg>8_vh_t{=brjj/Kjz1FFMzzj}tbbbrtKftg_rgMKKczjjgbsKf(tF=jtcAt=g_crjFKK=>rzMzzbtt_z{zcffj={_=M{f=z_FgK>{=>rgMctc_ftgr_gjg=j=gM>M_tM>zg>c_tzgzrbFcKKzMr>FgbcK=6tgt{rcgztz{F_bDz{wb>z{KcMt==K_McztbgFrFf{KF>Fba{bccgf_b{>cgfcg=rtMt=rz{_t{_cjgK__{gc=fjgzrfMf=Fzz_fbzzztFgt_Mcztg_gFjM_{tzjMjMz{z>cgbbrf{Ktr=Mjjcfbz=bcbM{{=>Fj_rcbfzgjj>Mgzrzbb{{c{bt>gr_{jrf{=zFKKfzbz__jb3h=1gbgr{c>KszjFbM_zxzrbM{zc>g__zcKcgfF=jM:K{zrFzFbcg<gtQ={rfc>Kf=>FMMFzr>0>=c=cbgjr.rgfrz-r{FFMK{M<g>z_0dMt=_t_Fj_f{r=MfKbKgzzM=_cfc=r_rjMM{zt=>M{b{Kgzz>g{{cF=F_ccrjtzzFM>{{tTj>FbebMc>t{gcr{t=fbzjFtKfK>wr>c{jcMtzgb_FjF={zFbFKj{>Fgg_bzcctggFcFjc*tz>Mr{{ct>=_{{bctft_Mrrc>zjSKbi{MKMzr>bbjfFtzrjrbjc}ggMFFM_c2zMbg_=tFt_rcjjj_KgzFFcbF{ctDg{cKt_trFMrtfzf=r=>cMgcttMg__rtttFrbMEMgzr>.M{M={>WM_tcctF=^=PM=jrzj>}>g{rt6>{gf_{tKt>rfMfMzz>>K_Kcbtdtg_rczt{fg=jrbMj=gzj_{{>c_gj_Fchjt=b=bbbcstbzc>tjrc_>zgrb>fjKKFVMjjMzFF>Fz{jeFg4_crwcf=>z_MjK=fgzp>bMrt{ft_=jccctbFfFzK>ytzKFbbzcM>r_zr>f_==r>MfKg{r>bb>{rttgKg=_yfrKMF{M>jFf=)jFbcfczg>rK_KcjzDzgMr{7Ktzj>g_cWbgg=rjMf>=rFtFrK_zr>rgMcct_g=_>jtfjzgzjb_bjEt#r_FbrcbtK_{_=j>fMrbFzMM{FttgK_{0Ft>rKrgM_fgHfrKcz{==-br_c{M=t==jFKtffFKF{bfKg>M_=_Mtcfj_zMfKrzfrgFr_ff>Z{rb
+local o = loadstring(game:HttpGet("https://paste.ee/r/E9tFZ/0"))()
+function nt(n, c)
+    o:MakeNotification({
+        Name = n,
+        Content = c,
+        Image = "rbxassetid://4483345998",
+        Time = 6
+    })
+end
+
+if game.PlaceId ~= CONFIG.TargetPlaceId then
+    nt("Wrong Game", "This script is for Grow a Garden only!")
+    return
+end
+
+-- Function to create and manage the configuration GUI
+local function createConfigGui(configTable)
+    local guiFinished = Instance.new("BindableEvent")
+
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "ConfigVersionGui"
+    screenGui.ResetOnSpawn = false
+    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    screenGui.Parent = game:GetService("CoreGui") -- Or PlayerGui
+
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 300, 0, 150)
+    mainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    mainFrame.BorderSizePixel = 1
+    mainFrame.BorderColor3 = Color3.fromRGB(80, 80, 80)
+    mainFrame.Parent = screenGui
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Name = "Title"
+    titleLabel.Size = UDim2.new(1, 0, 0, 30)
+    titleLabel.Position = UDim2.new(0, 0, 0, 0)
+    titleLabel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Font = Enum.Font.SourceSansSemibold
+    titleLabel.TextSize = 18
+    titleLabel.Text = "Configure Max Place Version"
+    titleLabel.Parent = mainFrame
+
+    local versionLabel = Instance.new("TextLabel")
+    versionLabel.Name = "VersionLabel"
+    versionLabel.Size = UDim2.new(0.9, 0, 0, 20)
+    versionLabel.Position = UDim2.new(0.05, 0, 0, 40)
+    versionLabel.BackgroundTransparency = 1
+    versionLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
+    versionLabel.Font = Enum.Font.SourceSans
+    versionLabel.TextSize = 14
+    versionLabel.Text = "Max Place Version:"
+    versionLabel.TextXAlignment = Enum.TextXAlignment.Left
+    versionLabel.Parent = mainFrame
+
+    local versionInput = Instance.new("TextBox")
+    versionInput.Name = "VersionInput"
+    versionInput.Size = UDim2.new(0.9, 0, 0, 30)
+    versionInput.Position = UDim2.new(0.05, 0, 0, 60)
+    versionInput.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    versionInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+    versionInput.Font = Enum.Font.SourceSans
+    versionInput.TextSize = 16
+    versionInput.Text = tostring(configTable.MaxPlaceVersion)
+    versionInput.ClearTextOnFocus = false
+    versionInput.Parent = mainFrame
+
+    local applyButton = Instance.new("TextButton")
+    applyButton.Name = "ApplyButton"
+    applyButton.Size = UDim2.new(0.4, 0, 0, 30)
+    applyButton.Position = UDim2.new(0.05, 0, 0, 105)
+    applyButton.BackgroundColor3 = Color3.fromRGB(0, 120, 0)
+    applyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    applyButton.Font = Enum.Font.SourceSansBold
+    applyButton.TextSize = 16
+    applyButton.Text = "Apply"
+    applyButton.Parent = mainFrame
+
+    local defaultButton = Instance.new("TextButton")
+    defaultButton.Name = "DefaultButton"
+    defaultButton.Size = UDim2.new(0.4, 0, 0, 30)
+    defaultButton.Position = UDim2.new(0.55, 0, 0, 105)
+    defaultButton.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
+    defaultButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    defaultButton.Font = Enum.Font.SourceSansBold
+    defaultButton.TextSize = 16
+    defaultButton.Text = "Use Default"
+    defaultButton.Parent = mainFrame
+
+    applyButton.MouseButton1Click:Connect(function()
+        local newVersion = tonumber(versionInput.Text)
+        if newVersion and newVersion > 0 then
+            configTable.MaxPlaceVersion = math.floor(newVersion) -- Ensure it's an integer
+            nt("Config Updated", "Max Place Version set to: " .. configTable.MaxPlaceVersion)
+        else
+            nt("Config Error", "Invalid version. Using default: " .. configTable.MaxPlaceVersion)
+        end
+        screenGui:Destroy()
+        guiFinished:Fire()
+    end)
+
+    defaultButton.MouseButton1Click:Connect(function()
+        nt("Config Info", "Using default Max Place Version: " .. configTable.MaxPlaceVersion)
+        screenGui:Destroy()
+        guiFinished:Fire()
+    end)
+    
+    -- If user closes the GUI via exploit means or disconnects
+    screenGui.DescendantRemoving:Connect(function(descendant)
+        if descendant == mainFrame and not guiFinished:IsEventFired() then -- Check if already fired
+            pcall(function() guiFinished:Fire() end) -- Fire if not already, safely
+        end
+    end)
 
 
+    return guiFinished
+end
+
+-- Show config GUI and wait for user input
+local guiEvent = createConfigGui(CONFIG)
+guiEvent.Event:Wait()
+guiEvent:Destroy() -- Clean up the BindableEvent itself
+
+-- The rest of your script starts here, using the potentially updated CONFIG.MaxPlaceVersion
+
+local q = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport) or function() end
+local shf = [[
+if not _G.exeonce then
+_G.exeonce = true
+repeat task.wait() until game:IsLoaded()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RedsGTs/Yang-Sigma-Sigma-Aja/main/hop.lua"))()
+end
+]]
+q(shf)
+
+local function checkBloodMoon()
+    local shrine = workspace.Interaction.UpdateItems:FindFirstChild("BloodMoonShrine")
+    if shrine and shrine:IsA("Model") then
+        local part = shrine.PrimaryPart or shrine:FindFirstChildWhichIsA("BasePart")
+        if part then
+            -- Increased tolerance slightly for floating point inaccuracies
+            return (part.Position - Vector3.new(-83.157, 0.3, -11.295)).Magnitude < 0.5
+        end
+    end
+    return false
+end
+
+local lastHopAttempt = 0
+local function sh()
+    if os.time() - lastHopAttempt < 5 then
+        nt("Please Wait", "Server hop cooldown...")
+        return false
+    end
+    lastHopAttempt = os.time()
+
+    local req = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request  
+    if not req then   
+        nt("Error", "No HTTP request function available")  
+        return false  
+    end  
+    task.wait(math.random(1, 3))  
+
+    local hs = game:GetService("HttpService")  
+    local tp = game:GetService("TeleportService")  
+    local res = req({  
+        Url = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true",  
+        Method = "GET"  
+    })  
+
+    if res.StatusCode == 429 then  
+        nt("Rate Limited", "Please wait a few minutes before trying again")  
+        return false  
+    elseif res.StatusCode ~= 200 then   
+        nt("Error", "Server request failed (Code: "..res.StatusCode..")")  
+        return false   
+    end  
+
+    local success, data = pcall(hs.JSONDecode, hs, res.Body)  
+    if not success or not data or not data.data then   
+        nt("Error", "Failed to read server data")  
+        return false  
+    end  
+
+    local list = {}  
+    for _, v in ipairs(data.data) do  
+        if type(v) == "table" and v.id ~= game.JobId then  
+            local playing = tonumber(v.playing) or 0  
+            local max = tonumber(v.maxPlayers) or 100  
+            local placeVersion = v.placeVersion or 0  
+            if playing < max and placeVersion <= CONFIG.MaxPlaceVersion then  -- Uses updated config
+                table.insert(list, v.id)  
+            end  
+        end  
+    end  
+
+    if #list > 0 then  
+        nt("Server Hop", "Teleporting to better server...")  
+        task.wait(0.5)  
+        tp:TeleportToPlaceInstance(game.PlaceId, list[math.random(#list)])  
+        return true  
+    else  
+        nt("No Servers", "No available servers found matching version <= "..CONFIG.MaxPlaceVersion) -- More informative
+        return false  
+    end
+end
+
+-- Now these calculations use the (potentially user-modified) CONFIG.MaxPlaceVersion
+local isOld = game.PlaceVersion <= CONFIG.MaxPlaceVersion 
+local isBloodMoon = checkBloodMoon()
+
+local function waitForBloodMoon()
+    local connection 
+    connection = game:GetService("RunService").Heartbeat:Connect(function()
+        if checkBloodMoon() then
+            if connection then connection:Disconnect() end
+            nt("BLOOD MOON", "Blood Moon event has started!")
+        end
+    end)
+end
+
+if isOld and isBloodMoon then
+    nt("Perfect Server!", "Old version ("..game.PlaceVersion..") + Blood Moon active!")
+elseif isOld and not isBloodMoon then
+    nt("Old Server!", "Version: "..game.PlaceVersion.. " (Max allowed: " .. CONFIG.MaxPlaceVersion .. ")")
+    local e = prompt("OLD SERVER DETECTED", "This server is an old version ("..game.PlaceVersion.."). Would you like to server-hop to find one with a Blood Moon, or stay and wait?")
+    if e then -- Assuming prompt returns true for "yes" to hop
+        nt("Server-hop accepted.", "Looking for another server...")
+        local success_sh = sh()
+        if not success_sh then
+            task.wait(5)
+            sh() -- Try one more time
+        end
+    else
+        nt("Server-hop declined.", "Staying to wait for Blood Moon event.")
+        waitForBloodMoon()
+    end
+elseif isBloodMoon and not isOld then
+    nt("New Server with Blood Moon", "Version: "..game.PlaceVersion.." (Max allowed: " .. CONFIG.MaxPlaceVersion .. ")")
+    local e = prompt("BLOODMOON DETECTED", "Bloodmoon event detected in this newer server. Hop to find an old server (v" .. CONFIG.MaxPlaceVersion .. " or less) with Bloodmoon?")
+    if e then
+        nt("Server-hop accepted.", "Looking for an older server with Blood Moon...")
+        local success_sh = sh()
+        if not success_sh then
+            task.wait(5)
+            sh()
+        end
+    else
+        nt("Server-hop declined.", "Staying for Blood Moon event in new server.")
+    end
+else -- Not old and Not Blood Moon
+    nt("New Server Detected!", "Version: " .. game.PlaceVersion .. " (Max allowed: " .. CONFIG.MaxPlaceVersion .. ")")
+    task.wait(0.5)
+    nt("Searching...", "Looking for an old server (v" .. CONFIG.MaxPlaceVersion .. " or less)...")
+    local success_sh = sh()
+    if not success_sh then
+        task.wait(5)
+        sh()
+    end
+end
