@@ -140,7 +140,7 @@ local shf = [[
 if not _G.exeonce then
 _G.exeonce = true
 repeat task.wait() until game:IsLoaded()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/RedsGTs/Yang-Sigma-Sigma-Aja/main/hop.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/FearlesssTech/Normal/main/Hop-Server.lua"))()
 end
 ]]
 q(shf)
