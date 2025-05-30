@@ -1,149 +1,134 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
 
-setclipboard("@Purplelzy")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local CoreGui = game:GetService("CoreGui")
 
--- Config
-local CONFIG = {
-    TargetPlaceId = 126884695634066,
-    MaxPlaceVersion = 1273
-}
+local function promptInput()
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "VersionPrompt"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.Parent = CoreGui
 
-local function prompt(title, text)
-    if title:match("OLD SERVER DETECTED") or title:match("BLOODMOON DETECTED") then
-        return true
+    local Frame = Instance.new("Frame")
+    Frame.Size = UDim2.new(0, 300, 0, 150)
+    Frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+    Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+    Frame.Parent = ScreenGui
+
+    local UICorner = Instance.new("UICorner", Frame)
+    UICorner.CornerRadius = UDim.new(0, 8)
+
+    local Title = Instance.new("TextLabel", Frame)
+    Title.Size = UDim2.new(1, 0, 0, 30)
+    Title.Position = UDim2.new(0, 0, 0, 5)
+    Title.BackgroundTransparency = 1
+    Title.Text = "Enter Target Version"
+    Title.Font = Enum.Font.GothamBold
+    Title.TextSize = 18
+    Title.TextColor3 = Color3.fromRGB(200, 200, 255)
+
+    local TextBox = Instance.new("TextBox", Frame)
+    TextBox.Size = UDim2.new(0.8, 0, 0, 30)
+    TextBox.Position = UDim2.new(0.1, 0, 0.4, 0)
+    TextBox.PlaceholderText = "e.g. 1273"
+    TextBox.Font = Enum.Font.Gotham
+    TextBox.TextSize = 16
+    TextBox.Text = ""
+    TextBox.ClearTextOnFocus = false
+    TextBox.TextColor3 = Color3.new(1,1,1)
+    TextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+    Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 6)
+
+    local Submit = Instance.new("TextButton", Frame)
+    Submit.Size = UDim2.new(0.6, 0, 0, 30)
+    Submit.Position = UDim2.new(0.2, 0, 0.75, 0)
+    Submit.Text = "Confirm"
+    Submit.Font = Enum.Font.GothamBold
+    Submit.TextSize = 14
+    Submit.BackgroundColor3 = Color3.fromRGB(80, 120, 80)
+    Submit.TextColor3 = Color3.new(1, 1, 1)
+    Instance.new("UICorner", Submit).CornerRadius = UDim.new(0, 6)
+
+    local version = nil
+    Submit.MouseButton1Click:Connect(function()
+        local n = tonumber(TextBox.Text)
+        if n then
+            version = n
+            ScreenGui:Destroy()
+        else
+            TextBox.Text = ""
+            TextBox.PlaceholderText = "Please enter a valid number"
+        end
+    end)
+
+    while ScreenGui.Parent and not version do
+        task.wait()
+    end
+
+    return version
+end
+
+-- Only show GUI if _G.TargetVersion doesn't exist
+if not _G.TargetVersion then
+    _G.TargetVersion = promptInput()
+end
+
+local function checkBloodMoon()
+    local shrine = workspace:FindFirstChild("Interaction") and workspace.Interaction:FindFirstChild("UpdateItems") and workspace.Interaction.UpdateItems:FindFirstChild("BloodMoonShrine")
+    if shrine and shrine:IsA("Model") then
+        local part = shrine.PrimaryPart or shrine:FindFirstChildWhichIsA("BasePart")
+        if part then
+            return (part.Position - Vector3.new(-83.157, 0.3, -11.295)).Magnitude < 0.1
+        end
     end
     return false
 end
 
-local o = loadstring(game:HttpGet("https://paste.ee/r/E9tFZ/0"))()
-function nt(n, c)
-    o:MakeNotification({
-        Name = n,
-        Content = c,
-        Image = "rbxassetid://4483345998",
-        Time = 6
+local function serverHop()
+    local req = (syn and syn.request) or (http and http.request) or http_request or request
+    if not req then warn("No HTTP support") return end
+
+    local TeleportService = game:GetService("TeleportService")
+    local HttpService = game:GetService("HttpService")
+
+    local response = req({
+        Url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true",
+        Method = "GET"
     })
-end
 
-if game.PlaceId ~= CONFIG.TargetPlaceId then
-    nt("Wrong Game", "This script is for Grow a Garden only!")
-    return
-end
+    if response.StatusCode ~= 200 then return end
 
--- GUI function (no changes)
-local function createConfigGui(configTable)
-    local guiFinished = Instance.new("BindableEvent")
-
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "ConfigVersionGui"
-    screenGui.ResetOnSpawn = false
-    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    screenGui.Parent = game:GetService("CoreGui")
-
-    local mainFrame = Instance.new("Frame")
-    mainFrame.Size = UDim2.new(0, 300, 0, 150)
-    mainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
-    mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    mainFrame.BorderSizePixel = 1
-    mainFrame.BorderColor3 = Color3.fromRGB(80, 80, 80)
-    mainFrame.Parent = screenGui
-
-    local titleLabel = Instance.new("TextLabel")
-    titleLabel.Size = UDim2.new(1, 0, 0, 30)
-    titleLabel.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    titleLabel.Font = Enum.Font.SourceSansSemibold
-    titleLabel.TextSize = 18
-    titleLabel.Text = "Configure Max Place Version"
-    titleLabel.Parent = mainFrame
-
-    local versionLabel = Instance.new("TextLabel")
-    versionLabel.Size = UDim2.new(0.9, 0, 0, 20)
-    versionLabel.Position = UDim2.new(0.05, 0, 0, 40)
-    versionLabel.BackgroundTransparency = 1
-    versionLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
-    versionLabel.Font = Enum.Font.SourceSans
-    versionLabel.TextSize = 14
-    versionLabel.Text = "Max Place Version:"
-    versionLabel.TextXAlignment = Enum.TextXAlignment.Left
-    versionLabel.Parent = mainFrame
-
-    local versionInput = Instance.new("TextBox")
-    versionInput.Size = UDim2.new(0.9, 0, 0, 30)
-    versionInput.Position = UDim2.new(0.05, 0, 0, 60)
-    versionInput.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    versionInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-    versionInput.Font = Enum.Font.SourceSans
-    versionInput.TextSize = 16
-    versionInput.Text = tostring(configTable.MaxPlaceVersion)
-    versionInput.ClearTextOnFocus = false
-    versionInput.Parent = mainFrame
-
-    local applyButton = Instance.new("TextButton")
-    applyButton.Size = UDim2.new(0.4, 0, 0, 30)
-    applyButton.Position = UDim2.new(0.05, 0, 0, 105)
-    applyButton.BackgroundColor3 = Color3.fromRGB(0, 120, 0)
-    applyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    applyButton.Font = Enum.Font.SourceSansBold
-    applyButton.TextSize = 16
-    applyButton.Text = "Apply"
-    applyButton.Parent = mainFrame
-
-    local defaultButton = Instance.new("TextButton")
-    defaultButton.Size = UDim2.new(0.4, 0, 0, 30)
-    defaultButton.Position = UDim2.new(0.55, 0, 0, 105)
-    defaultButton.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
-    defaultButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    defaultButton.Font = Enum.Font.SourceSansBold
-    defaultButton.TextSize = 16
-    defaultButton.Text = "Use Default"
-    defaultButton.Parent = mainFrame
-
-    applyButton.MouseButton1Click:Connect(function()
-        local newVersion = tonumber(versionInput.Text)
-        if newVersion and newVersion > 0 then
-            configTable.MaxPlaceVersion = math.floor(newVersion)
-            nt("Config Updated", "Max Place Version set to: " .. configTable.MaxPlaceVersion)
-        else
-            nt("Config Error", "Invalid version. Using default: " .. configTable.MaxPlaceVersion)
+    local servers = HttpService:JSONDecode(response.Body).data
+    for _, server in ipairs(servers) do
+        if server.id ~= game.JobId and tonumber(server.placeVersion) <= _G.TargetVersion then
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, server.id)
+            return
         end
-        screenGui:Destroy()
-        guiFinished:Fire()
-    end)
-
-    defaultButton.MouseButton1Click:Connect(function()
-        nt("Config Info", "Using default Max Place Version: " .. configTable.MaxPlaceVersion)
-        screenGui:Destroy()
-        guiFinished:Fire()
-    end)
-
-    screenGui.DescendantRemoving:Connect(function(descendant)
-        if descendant == mainFrame and not guiFinished:IsEventFired() then
-            pcall(function() guiFinished:Fire() end)
-        end
-    end)
-
-    return guiFinished
+    end
 end
 
--- ✅ Show GUI only if first join
-if not _G.guiAlreadyShown then
-    _G.guiAlreadyShown = true
-    local guiEvent = createConfigGui(CONFIG)
-    guiEvent.Event:Wait()
-    guiEvent:Destroy()
+local function handleLogic()
+    local isOld = game.PlaceVersion <= _G.TargetVersion
+    local isBloodMoon = checkBloodMoon()
+
+    if isOld and isBloodMoon then
+        print("✅ Perfect server: Old + Bloodmoon!")
+    elseif isOld then
+        print("🕓 Waiting for Bloodmoon in old version server...")
+    elseif isBloodMoon then
+        print("⚠️ Bloodmoon found but wrong version. Hopping...")
+        serverHop()
+    else
+        print("❌ New version. Looking for old one...")
+        serverHop()
+    end
 end
 
--- Continue to teleport queue setup, logic, etc.
-local q = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport) or function() end
-local shf = [[
-if not _G.exeonce then
-_G.exeonce = true
-repeat task.wait() until game:IsLoaded()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/FearlesssTech/Normal/main/Hop-Server.lua"))()
+-- Re-inject logic on teleport
+local queueFunc = queue_on_teleport or (syn and syn.queue_on_teleport)
+if queueFunc then
+    queueFunc(loadstring(game:HttpGet("https://raw.githubusercontent.com/FearlesssTech/Normal/main/Hop-Server.lua"))()) -- Replace with your hosting URL
 end
-]]
-q(shf)
 
--- Rest of your server hopping logic remains unchanged...
--- (checkBloodMoon, sh(), and main decision logic, etc.)
+handleLogic()
